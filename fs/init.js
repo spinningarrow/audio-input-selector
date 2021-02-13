@@ -10,6 +10,7 @@ load('api_shadow.js');
 load('api_timer.js');
 load('api_sys.js');
 load('api_watson.js');
+load('api_rpc.js');
 
 let btn = Cfg.get('board.btn1.pin');              // Built-in button GPIO
 let led = Cfg.get('board.led1.pin');              // Built-in LED GPIO number
@@ -110,3 +111,29 @@ Event.on(Event.CLOUD_CONNECTED, function() {
 Event.on(Event.CLOUD_DISCONNECTED, function() {
   online = false;
 }, null);
+
+let inputs = {
+	A: Cfg.get('app.input1'),
+	B: Cfg.get('app.input2'),
+	C: Cfg.get('app.input3'),
+	D: Cfg.get('app.input4')
+};
+
+GPIO.set_mode(inputs.A, GPIO.MODE_OUTPUT);
+GPIO.set_mode(inputs.B, GPIO.MODE_OUTPUT);
+GPIO.set_mode(inputs.C, GPIO.MODE_OUTPUT);
+GPIO.set_mode(inputs.D, GPIO.MODE_OUTPUT);
+
+RPC.addHandler('Input.Select', function(args) {
+  GPIO.write(inputs.A, false);
+  GPIO.write(inputs.B, false);
+  GPIO.write(inputs.C, false);
+  GPIO.write(inputs.D, false);
+
+  print('ARGS', args);
+  print('ARGS.value', args.value);
+
+  GPIO.write(inputs[args.value], true);
+
+  return { args: args };
+});
