@@ -1,15 +1,11 @@
-load('api_aws.js');
-load('api_azure.js');
 load('api_config.js');
 load('api_dash.js');
 load('api_events.js');
-load('api_gcp.js');
 load('api_gpio.js');
 load('api_mqtt.js');
 load('api_shadow.js');
 load('api_timer.js');
 load('api_sys.js');
-load('api_watson.js');
 load('api_rpc.js');
 
 let btn = Cfg.get('board.btn1.pin');              // Built-in button GPIO
@@ -72,21 +68,6 @@ if (btn >= 0) {
     state.btnCount++;
     let message = JSON.stringify(state);
     let sendMQTT = true;
-    if (Azure.isConnected()) {
-      print('== Sending Azure D2C message:', message);
-      Azure.sendD2CMsg('', message);
-      sendMQTT = false;
-    }
-    if (GCP.isConnected()) {
-      print('== Sending GCP event:', message);
-      GCP.sendEvent(message);
-      sendMQTT = false;
-    }
-    if (Watson.isConnected()) {
-      print('== Sending Watson event:', message);
-      Watson.sendEventJSON('ev', {d: state});
-      sendMQTT = false;
-    }
     if (Dash.isConnected()) {
       print('== Click!');
       // TODO: Maybe do something else?

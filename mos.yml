@@ -1,5 +1,5 @@
-author: mongoose-os
-description: A JS-enabled demo Mongoose OS firmware
+author: spinningarrow
+description: ESP32 relay audio input selector
 # arch: PLATFORM
 version: 1.0
 manifest_version: 2017-05-18
@@ -30,7 +30,6 @@ libs:
   - origin: https://github.com/mongoose-os-libs/rpc-service-fs
   - origin: https://github.com/mongoose-os-libs/rpc-uart
   - origin: https://github.com/mongoose-os-libs/wifi
-  - origin: https://github.com/mongoose-os-libs/dht  # <-- Add this line!
   - origin: https://github.com/mongoose-os-libs/mjs  # <-- Add this line!
 
 conds:
